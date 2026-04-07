@@ -1,5 +1,5 @@
+import Breadcrumbs from "@/component/breadcrumbs";
 import ItemList from "@/component/itemlist";
-
 
 export default function Home() {
   return (
@@ -13,6 +13,8 @@ export default function Home() {
                <p className="text-black">Explore our wide range of products</p>
            </div>
          </section>
+
+         <Breadcrumbs aria-label="Breadcrumbs" />
 
          {/* Item Lists */}
          <section>
