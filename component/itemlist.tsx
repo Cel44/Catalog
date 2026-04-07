@@ -53,7 +53,7 @@ export default function ItemList() {
             <div key={product.id} className="text-black border p-4 m-10 rounded-md flex flex-col gap-1 rounded-lg hover:scale-105 transition-transform">
                <h3>{product.name}</h3>
                <p>Brand: {itemDetails.find(item => item.id === product.id)?.brand}</p>
-               <p>Price: ${product.price}</p>
+               <p>Price: Rp. {product.price}</p>
             </div>
          ))}
       </div>
