@@ -1,76 +1,77 @@
 "use client";
 import { useRouter, useSearchParams } from 'next/navigation';
 import data from '@/public/data.json';
+import { useState } from 'react';
 
 export default function Navbar() {
    const router = useRouter();
    const searchParams = useSearchParams();
 
-   function setCategory (category:string) {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set('category', category);
+   const [category, setCategory] = useState(searchParams.get("category") || "");
+   const [subCategory, setSubCategory] = useState(searchParams.get("subCategory") || "");
+   const [brand, setBrand] = useState(searchParams.get("brand") || "");
+
+   function applyFilter(){
+      const params = new URLSearchParams();
+      if(category) params.set('category', category);
+      if(subCategory) params.set('subCategory', subCategory);
+      if(brand) params.set('brand', brand);
+
       router.push(`/?${params.toString()}`);
    }
-
-   function setSubCategory (subCategory:string) {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set('subCategory', subCategory);
-      router.push(`/?${params.toString()}`);
-   }
-
-   function setBrands (brands:string) {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set('brands', brands);
-      router.push(`/?${params.toString()}`);
-   }
-
-   const selectedCategory = searchParams.get('category') || '';
-   const selectedSubCategory = searchParams.get('subCategory') || '';
-   const selectedBrand = searchParams.get('brands') || '';
 
    return ( 
          <div className="flex gap-6 bg-gray-100 px-4">
        
            {/* CATEGORY */}
-           <select
-             value={selectedCategory}
-             onChange={(e) => setCategory(e.target.value)}
-             className='text-black onTarget:bg-gray-300'
-           >
-             <option value="">All Categories</option>
-             {data.categories.map((cat) => (
-               <option key={cat.id} value={cat.id}>
-                 {cat.name}
+            <select
+               value={category}
+               onChange={(e) => setCategory(e.target.value)}
+               className='p-1 text-white my-1.5 rounded-md bg-pink-400 inset-ring-1 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2 focus:ring-offset-gray-100'
+            >
+               <option value="">All Categories</option>
+                  {data.categories.map((cat) => (
+                     <option key={cat.id} value={cat.id}>
+                     {cat.name}
                </option>
-             ))}
-           </select>
+               ))}
+            </select>
        
-           {/* SUBCATEGORY */}
-           <select
-             value={selectedSubCategory}
-             onChange={(e) => setSubCategory(e.target.value)}
-           >
-             <option value="">All Subcategories</option>
-             {data.subCategories.map((sub) => (
-               <option key={sub.id} value={sub.id}>
-                 {sub.name}
-               </option>
-             ))}
-           </select>
+            {/* SUBCATEGORY */}
+            <select
+               value={subCategory}
+               onChange={(e) => setSubCategory(e.target.value)}
+               className='p-1 text-white my-1.5 rounded-md bg-pink-400 inset-ring-1 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2 focus:ring-offset-gray-100'
+            >
+               <option value="">All Subcategories</option>
+               {data.subCategories.map((sub) => (
+                  <option key={sub.id} value={sub.id}>
+                  {sub.name}
+                  </option>
+               ))}
+            </select>
        
-           {/* BRAND */}
-           <select
-             value={selectedBrand}
-             onChange={(e) => setBrands(e.target.value)}
-             className='text-black'
-           >
-             <option value="">All Brands</option>
-             {data.brands.map((brand) => (
-               <option key={brand.id} value={brand.id}>
-                 {brand.name}
+            {/* BRAND */}
+            <select
+               value={brand}
+               onChange={(e) => setBrand(e.target.value)}
+               className='p-1 text-white my-1.5 rounded-md bg-pink-400 inset-ring-1 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2 focus:ring-offset-gray-100'
+            >
+               <option value="">All Brands</option>
+               {data.brands.map((brand) => (
+                  <option key={brand.id} value={brand.id}>
+                  {brand.name}
                </option>
-             ))}
-           </select>
+               ))}
+            </select>
+
+            {/* BUTTON */}
+            <button
+               onClick={applyFilter}
+               className="p-1 text-white my-1.5 rounded-md bg-pink-400 inset-ring-1 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2 focus:ring-offset-gray-100"
+            >
+               Filter
+            </button>
        
          </div>
        );
