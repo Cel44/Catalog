@@ -7,19 +7,24 @@ export default function ItemList() {
    const searchParams = useSearchParams();
 
    const products = data.products;
+   const categories = data.categories;
+   const subCategories = data.subCategories
+   const brands = data.brands;
 
    const brandsById = data.brands.map((brand) => ({ id: brand.id, subCategoryId: brand.subCategoryId, name: brand.name }));
    const subCategoriesById = data.subCategories.map((sub) => ({ id: sub.id, categoryId: sub.categoryId, name: sub.name }));
    const categoriesById = data.categories.map((cat) => ({ id: cat.id, name: cat.name }));
 
    const itemDetails = products.map((product) => {
-      const brand = brandsById.find((b) => b.id === product.brandId)?.name || "Unknown Brand";
+      const brand = brands.find( b => b.id === product.brandId)
+      const subCat = subCategories.find( b => b.id === brand?.subCategoryId)
+      const Cat = categories.find( b => b.id === subCat?.categoryId)
 
       return {
          id: product.id,
          name: product.name,
          price: product.price,
-         brand
+         brand: brand?.name
       };
    });
 
@@ -32,13 +37,8 @@ export default function ItemList() {
    const selectedBrand = brand ? brand.id : "";
 
    const filteredProducts = data.products.filter((product) => {
-      const brand = data.brands.find(
-        (b) => b.id === product.brandId
-      );
-    
-      const sub = data.subCategories.find(
-        (s) => s.id === brand?.subCategoryId
-      );
+      const brand = data.brands.find((b) => b.id === product.brandId);
+      const sub = data.subCategories.find((s) => s.id === brand?.subCategoryId);
     
       return (
         (!selectedCategory || sub?.categoryId === selectedCategory) &&
@@ -59,5 +59,3 @@ export default function ItemList() {
       </div>
    );
 }
-
-console.log(data);
