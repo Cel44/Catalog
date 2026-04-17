@@ -1,7 +1,6 @@
 "use client";
-import data from "@/public/data.json";
+import data from "@/data/data.json";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
 
 export default function ItemList() {
    const searchParams = useSearchParams();

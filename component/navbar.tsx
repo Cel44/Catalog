@@ -1,6 +1,6 @@
 "use client";
 import { useRouter, useSearchParams } from 'next/navigation';
-import data from '@/public/data.json';
+import data from '@/data/data.json';
 import { useState } from 'react';
 
 export default function Navbar() {

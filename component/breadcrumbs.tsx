@@ -1,7 +1,7 @@
 "use client"
 
 import { useSearchParams, useRouter } from "next/navigation";
-import data from "@/public/data.json";
+import data from "@/data/data.json";
 import Link from "next/link";
 
 export default function Breadcrumbs() {
